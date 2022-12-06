@@ -1,0 +1,55 @@
+service: demo-python-serverless
+#app: demo-python-serverless
+#org: software-maciej-falkowski
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  stage: dev
+  runtime: python3.9
+  region: eu-west-3
+  timeout: 15
+  memorySize: 128
+  environment:
+    STAGE: ${self:custom.deployStage}
+    DB_HOST: ${self:custom.environmentConfiguration.DB_HOST.${self:custom.deployStage}}
+    DB_USER: ${self:custom.environmentConfiguration.DB_USER.${self:custom.deployStage}}
+    DB_PWD: ${self:custom.environmentConfiguration.DB_PWD.${self:custom.deployStage}}
+    DB_NAME: ${self:custom.environmentConfiguration.DB_NAME.${self:custom.deployStage}}
+    JWT_ALGORITHM: ${file(./secrets.json):JWT_ALGORITHM}
+    SECRET_KEY: ${file(./secrets.json):SECRET_KEY}
+
+custom:
+  deployStage: ${opt:stage, sls:stage, 'dev'}
+  environmentConfiguration:
+    DB_HOST:
+      dev: "DEV_DB.eu-west-1.rds.amazonaws.com"
+    DB_USER:
+      dev: "DEV_USER"
+    DB_PWD:
+      dev: "DEV_PWD"
+    DB_NAME:
+      dev: "DEV_DB_NAME"
+  pythonRequirements:
+    dockerizePip: non-linux
+
+package:
+  exclude:
+    - 'LICENSE'
+    - '.gitignore'
+    - '!.travis.yml'
+    - '!README.md'
+  patterns:
+    - src/**
+    - '!.git/**'
+    - '!tests/**'
+    - '!node_modules/**'
+
+
+plugins:
+  - serverless-python-requirements
+
+functions:
+  - ${file(./src/handlers/auth/serverless.yml)}
+  - ${file(./src/handlers/customer/serverless.yml)}

@@ -1,0 +1,2 @@
+auth:
+  handler: src/handlers/auth/handler.auth

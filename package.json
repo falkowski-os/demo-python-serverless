@@ -1,0 +1,19 @@
+{
+  "name": "demo-python-serverless",
+  "version": "0.0.1",
+  "description": "Demo project for python serverless",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/falkowski-os/demo-python-serverless.git"
+  },
+  "author": "Maciej Fałkowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/falkowski-os/demo-python-serverless/issues"
+  },
+  "homepage": "https://github.com/falkowski-os/demo-python-serverless#readme",
+  "devDependencies": {
+    "serverless-wsgi": "^3.0.1",
+    "serverless-python-requirements": "^6.0.0"
+  }
+}

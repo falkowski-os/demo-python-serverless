@@ -1,0 +1,27 @@
+getCustomers:
+  handler: src/handlers/customer/handler.get
+  events:
+    - http:
+        path: api/users
+        method: get
+        authorizer: auth
+        cors: true
+
+createCustomer:
+  handler: src/handlers/customer/handler.create
+  events:
+    - http:
+        path: api/user
+        method: post
+        authorizer: auth
+        cors: true
+
+updateCustomer:
+  handler: src/handlers/customer/handler.update
+  events:
+    - http:
+        path: api/user
+        method: put
+        authorizer: auth
+        cors: true
+
